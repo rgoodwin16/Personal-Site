@@ -58,7 +58,7 @@ namespace MyFirstApp.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             BlogPost blogPost = db.Posts.Include("Comments").FirstOrDefault(p=>p.Slug == slug);
-            ViewBag.PostList = db.Posts.ToList();//include the comments on the blog post. First or default = the first comment listed or the default, which may be null, in which case nothing is displayed
+            ViewBag.PostList = db.Posts.OrderByDecending(c=> c.Created).Take(3).ToList();//include the comments on the blog post. First or default = the first comment listed or the default, which may be null, in which case nothing is displayed
             if (blogPost == null)
             {
                 return HttpNotFound();
